@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sublime Heels</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #111, #1a1a1a);
+      color: white;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin-bottom: 25px;
+    }
+
+    .images-grid img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+
+    .images-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #222;
+      padding: 15px;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .title { font-size: 1.2rem; font-weight: bold; }
+    .brand { color: #aaa; }
+  </style>
+</head>
+<body>
+
+<header>Munaza's couture</header>
+
+<div class="container">
+
+  <div class="images-grid">
+    <img src="WhatsApp Image 2026-05-03 at 8.32.51 PM.jpeg" alt="Heel Image 1">
+    <img src="WhatsApp Image 2026-05-03 at 8.31.56 PM.jpeg" alt="Heel Image 2">
+    <img src="WhatsApp Image 2026-05-03 at 8.31.55 PM.jpeg" alt="Heel Image 3">
+    <img src="WhatsApp Image 2026-05-03 at 8.31.55 PM (2).jpeg" alt="Heel Image 4">
+    <img src="WhatsApp Image 2026-05-03 at 8.31.55 PM (1).jpeg" alt="Heel Image 5">
+    <img src="WhatsApp Image 2026-05-03 at 8.31.54 PM.jpeg" alt="Heel Image 6">
+    <img src="WhatsApp Image 2026-05-03 at 8.31.54 PM (1).jpeg" alt="Heel Image 7">
+  </div>
+
+  <input id="search" placeholder="Search heels..." oninput="render()">
+
+  <h3>Add New Heel</h3>
+  <input id="name" placeholder="Heel Name">
+  <input id="brand" placeholder="Brand">
+  <input id="price" placeholder="Price">
+  <input id="desc" placeholder="Description">
+  <button onclick="addHeel()">Add Heel</button>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+  let heels = [
+    { name: "Elegant Stiletto", brand: "Sublime", price: "$80", desc: "Perfect for formal nights" },
+    { name: "Crystal Glam Heels", brand: "LuxeStep", price: "$120", desc: "Sparkling heels for special occasions" },
+    { name: "Classic Black Pumps", brand: "Elegance Co.", price: "$70", desc: "Timeless design for everyday wear" },
+    { name: "Golden Party Heels", brand: "ShineWalk", price: "$95", desc: "Bold and shiny for party nights" },
+    { name: "Velvet Red Heels", brand: "RoyalFeet", price: "$110", desc: "Soft velvet finish with a rich look" },
+    { name: "Minimal Nude Heels", brand: "PureStyle", price: "$65", desc: "Simple and versatile nude heels" },
+    { name: "Platform Power Heels", brand: "UrbanStep", price: "$105", desc: "High platform heels with strong grip" }
+  ];
+
+  function addHeel() {
+    const name = document.getElementById("name").value;
+    const brand = document.getElementById("brand").value;
+    const price = document.getElementById("price").value;
+    const desc = document.getElementById("desc").value;
+
+    if (!name || !brand) return;
+
+    heels.push({ name, brand, price, desc });
+
+    document.getElementById("name").value = "";
+    document.getElementById("brand").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("desc").value = "";
+
+    render();
+  }
+
+  function render() {
+    const search = document.getElementById("search").value.toLowerCase();
+    const grid = document.getElementById("grid");
+
+    grid.innerHTML = "";
+
+    heels
+      .filter(h => h.name.toLowerCase().includes(search) || h.brand.toLowerCase().includes(search))
+      .forEach(h => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+          <div class="title">${h.name}</div>
+          <div class="brand">${h.brand}</div>
+          <div>${h.desc}</div>
+          <div><b>${h.price}</b></div>
+        `;
+        grid.appendChild(div);
+      });
+  }
+
+  render();
+</script>
+
+</body>
+</html>
